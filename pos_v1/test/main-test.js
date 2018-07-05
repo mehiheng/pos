@@ -18,7 +18,6 @@ describe('pos', () => {
     spyOn(console, 'log');
 
     printReceipt(tags);
-
     const expectText = `***<没钱赚商店>收据***
 名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)
 名称：荔枝，数量：2.5斤，单价：15.00(元)，小计：37.50(元)
@@ -29,5 +28,28 @@ describe('pos', () => {
 **********************`;
 
     expect(console.log).toHaveBeenCalledWith(expectText);
+  });
+});
+
+describe('unit test', () => {
+
+  it('simpleTags', () => {
+
+    const tags = [
+      'ITEM000001',
+      'ITEM000001',
+      'ITEM000001',
+      'ITEM000001',
+      'ITEM000001',
+      'ITEM000003-2.5',
+      'ITEM000005',
+      'ITEM000005-2',
+    ];
+    const test1=JSON.stringify(tagSimple(tags));
+    const expectText1 = JSON.stringify([
+	{barcode: "ITEM000001", count: 1},{barcode: "ITEM000001", count: 1},{barcode: "ITEM000001", count: 1},{barcode: "ITEM000001", count: 1},{barcode: "ITEM000001", count: 1},{barcode: "ITEM000003", count: 2.5},
+{barcode: "ITEM000005", count: 1},{barcode: "ITEM000005", count: 2}]);
+
+    expect(expectText1).toBe(test1);
   });
 });
