@@ -31,9 +31,10 @@ describe('pos', () => {
   });
 });
 
-describe('unit test', () => {
+//1
+describe('#1unit test', () => {
 
-  it('simpleTags', () => {
+  it('tagSimple', () => {
 
     const tags = [
       'ITEM000001',
@@ -51,5 +52,57 @@ describe('unit test', () => {
 {barcode: "ITEM000005", count: 1},{barcode: "ITEM000005", count: 2}]);
 
     expect(expectText1).toBe(test1);
+  });
+});
+
+//2
+describe('#2unit test', () => {
+
+  it('itemsCount', () => {
+
+    const tags = [
+	{barcode: "ITEM000001", count: 1},
+	{barcode: "ITEM000001", count: 1},
+	{barcode: "ITEM000001", count: 1},
+	{barcode: "ITEM000001", count: 1},
+	{barcode: "ITEM000001", count: 1},
+	{barcode: "ITEM000003", count: 2.5},
+    {barcode: "ITEM000005", count: 1},
+	{barcode: "ITEM000005", count: 2}];
+
+    const test2=JSON.stringify(itemsCount(tags));
+    const expectText1 = JSON.stringify([{barcode: "ITEM000001", count: 5},{barcode: "ITEM000003", count: 2.5},{barcode: "ITEM000005", count: 3}]);
+    expect(expectText1).toBe(test2);
+  });
+});
+
+//3
+describe('#3unit test', () => {
+
+  it('initReceipt', () => {
+
+    const tags = [
+	{barcode: "ITEM000001", count: 5},
+	{barcode: "ITEM000003", count: 2.5},
+	{barcode: "ITEM000005", count: 3}]
+
+    const test3=JSON.stringify(initReceipt(tags));
+    const expectText1 = JSON.stringify([{barcode: "ITEM000001", count: 5, name: "雪碧", unit: "瓶", price: 3},{barcode: "ITEM000003", count: 2.5, name: "荔枝", unit: "斤", price: 15},{barcode: "ITEM000005", count: 3, name: "方便面", unit: "袋", price: 4.5}]);
+    expect(expectText1).toBe(test3);
+  });
+});
+
+//4
+describe('#4unit test', () => {
+
+  it('initReceipt', () => {
+
+    const tags =[{barcode: "ITEM000001", count: 5, name: "雪碧", unit: "瓶", price: 3},
+	{barcode: "ITEM000003", count: 2.5, name: "荔枝", unit: "斤", price: 15},
+	{barcode: "ITEM000005", count: 3, name: "方便面", unit: "袋", price: 4.5}]
+
+    const test4=JSON.stringify(caculatePromotions(tags));
+    const expectText1 = JSON.stringify([{barcode: "ITEM000001", count: 5, name: "雪碧", unit: "瓶", price: 3 ,total: 12},{barcode: "ITEM000003", count: 2.5, name: "荔枝", unit: "斤", price: 15, total: 37.5},{barcode: "ITEM000005", count: 3, name: "方便面", unit: "袋", price: 4.5, total: 9}]);
+    expect(expectText1).toBe(test4);
   });
 });
